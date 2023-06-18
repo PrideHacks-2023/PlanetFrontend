@@ -13,8 +13,10 @@
             <!-- Top image -->
             <img id="topImage" src="../assets/top.png" alt="Top Image">
 
+            <!-- Display messages retrived from api -->
             <div id="messages">
-                <div class="message">
+
+                <!-- <div class="message">
                     <div class="message-header">
                         <h3 class="message-title">Message Title</h3>
                         <h4 class="message-location">Message Location</h4>
@@ -22,7 +24,11 @@
                     <div class="message-body">
                         <p class="message-content">Message Content</p>
                     </div>
-                </div>
+                    <div class="message-footer">
+                        <p class="message-time">Message timestamp</p>
+                    </div>
+                    
+                </div> -->
             </div>
 
             <!-- Bottom image -->
@@ -36,29 +42,140 @@
 <script>
 import planetaryjs from 'planetary.js'
 import d3 from 'd3'
-// import bottomImage from '../assets/bottom.png'
-// import topImage from '../assets/top.png'
-// import axios from 'axios'
+import axios from 'axios'
 
 const jsonFilePath = 'https://raw.githubusercontent.com/PrideHacks-2023/planetaryFiles/main/world-110m.json'
 
-async function getMessages() {
-    // // http://143.198.81.168:5000/msg
-    // // Do a http get request to the backend using axios
-    // // return the response
+var messageInterval = null;
 
-    // await axios.get('http://143.198.81.168:5000/msg', {
-    //     headers: {
-    //     }
-    // }).then((response) => {
-    //     if (response.data) {
-    //         console.log(response.data)
-    //     }
-    // }).catch((error) => {
-    //     console.log(error)
-    // })
+var numMessages = 0;
 
-    // 
+async function getMessages(planet) {
+    // http://143.198.81.168:5000/msg
+    // Do a http get request to the backend using axios
+    // return the response
+
+    await axios.get('http://143.198.81.168:5000/msg', {
+        headers: {
+        }
+    }).then((response) => {
+        if (response.data) {
+            console.log(response.data)
+
+            // Process the data into the locations array and the messages array
+            var locations = []
+            var messages = []
+
+            numMessages = response.data.length;
+
+            for (var i = 0; i < response.data.length; i++) {
+                locations.push(response.data[i].location[1])
+
+                var messageInfo = {
+                    location: response.data[i].location[0],
+                    messageText: response.data[i].text,
+                    messageTitle: response.data[i].username,
+                    messageTime: response.data[i].timestamp
+                }
+                
+                messages.push(messageInfo)
+            }
+
+            console.log(messages)
+
+            // At fixed intervals, show a new message in the messages container
+            messageInterval = setInterval(() => {
+                // Get a random message from the messages array
+                var randomMessage = messages[Math.floor(Math.random() * messages.length)]
+
+                // Create a new message div
+                var newMessage = document.createElement('div')
+                newMessage.classList.add('message')
+
+                // Create the message header
+                var newMessageHeader = document.createElement('div')
+                newMessageHeader.classList.add('message-header')
+
+                // Create the message title
+                var newMessageTitle = document.createElement('h3')
+                newMessageTitle.classList.add('message-title')
+                newMessageTitle.innerHTML = randomMessage.messageTitle
+
+                // Create the message location
+                var newMessageLocation = document.createElement('h4')
+                newMessageLocation.classList.add('message-location')
+                newMessageLocation.innerHTML = randomMessage.location
+
+                // Add the title and location to the header
+                newMessageHeader.appendChild(newMessageTitle)
+                newMessageHeader.appendChild(newMessageLocation)
+
+                // Create the message body
+                var newMessageBody = document.createElement('div')
+                newMessageBody.classList.add('message-body')
+
+                // Create the message content
+                var newMessageContent = document.createElement('p')
+                newMessageContent.classList.add('message-content')
+                newMessageContent.innerHTML = randomMessage.messageText
+
+                // Add the content to the body
+                newMessageBody.appendChild(newMessageContent)
+
+                // Create the message footer
+                var newMessageFooter = document.createElement('div')
+                newMessageFooter.classList.add('message-footer')
+
+                // Create the message time
+                var newMessageTime = document.createElement('p')
+                newMessageTime.classList.add('message-time')
+                newMessageTime.innerHTML = randomMessage.messageTime
+
+                // Add the time to the footer
+                newMessageFooter.appendChild(newMessageTime)
+
+                // Add the header, body, and footer to the message
+                newMessage.appendChild(newMessageHeader)
+                newMessage.appendChild(newMessageBody)
+                newMessage.appendChild(newMessageFooter)
+
+                newMessage.classList.add('message')
+                
+                // Add the message to the messages container
+                document.getElementById('messages').appendChild(newMessage)
+
+                if (numMessages > 0) {
+                    numMessages -= 1
+                } else {
+                    clearInterval(messageInterval)
+                }
+            }, 3000)
+
+            console.log(locations)
+
+            // var rainbowColors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#4B0082', '#8F00FF']
+            var rainbowColorsPastel = ['#FFB6C1', '#FFC0CB', '#FF69B4', '#FF1493', '#DB7093', '#C71585', '#FFA07A']
+
+            // At fixed intervals, ping a random location on the planet
+            setInterval(() => {
+                // Get a random location from the locations array
+                var randomLocation = locations[Math.floor(Math.random() * locations.length)]
+
+                // Ping the location
+                planet.plugins.worldPings.add(randomLocation[1], randomLocation[0], {
+                    color:  rainbowColorsPastel[Math.floor(Math.random() * rainbowColorsPastel.length)],
+                    ttl: 2000,
+                    angle: Math.random() * 10
+                })
+            }, 1000)
+
+            // this.$refs.messagesContainer)
+
+        }
+    }).catch((error) => {
+        console.log(error)
+    })
+
 
 }
 
@@ -207,17 +324,17 @@ export default {
         planet.draw(canvas);
 
 
-        // Every few hundred milliseconds, we'll draw another random ping.
-        var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
-        setInterval(function () {
-            var lat = Math.random() * 170 - 85;
-            var lng = Math.random() * 360 - 180;
-            var color = colors[Math.floor(Math.random() * colors.length)];
-            planet.plugins.worldPings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
+        // // Every few hundred milliseconds, we'll draw another random ping.
+        // var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
+        // setInterval(function () {
+        //     var lat = Math.random() * 170 - 85;
+        //     var lng = Math.random() * 360 - 180;
+        //     var color = colors[Math.floor(Math.random() * colors.length)];
+        //     planet.plugins.worldPings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
 
-        }, 200);
+        // }, 200);
 
-        getMessages();
+        getMessages(planet);
 
     }
 };
@@ -257,7 +374,7 @@ export default {
     height: 80vh;
     text-align: left;
     margin: 50px;
-    padding: 20px;
+    padding: 10px 20px 20px 20px;
 
     color: #6ccfcf;
     font-family: monospace;
@@ -275,6 +392,7 @@ export default {
     background: #1404624c;
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px); */
+    margin-bottom: 10px;
 }
 
 #bottomImageDiv {
@@ -298,6 +416,17 @@ export default {
     overflow-x: hidden;
 }
 
+.message {
+    padding-right: 10px;
+    padding-left: 10px;
+    width: 90%;
+    margin-bottom: 10px;
+    border-radius: 1rem;
+    border-color: #35c5c5c3;
+    border-style: solid;
+    border-width: 1px 0px 1px 0px;    
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -309,18 +438,14 @@ export default {
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #60c7d1; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #187e87; 
 }
 
-.message {
-    margin-bottom: 10px;
-    border-radius: 1rem;
-    border-color: #6ccfcf88;
-}
+
 
 </style>
