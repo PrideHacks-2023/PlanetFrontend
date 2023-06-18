@@ -17,6 +17,7 @@ import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
 
 // Get API key from env file
 const apiKey = process.env.VUE_APP_GEOAPIFY_API_KEY;
+// var axios = require('axios');
 
 var lat = 0;
 var lon = 0;
