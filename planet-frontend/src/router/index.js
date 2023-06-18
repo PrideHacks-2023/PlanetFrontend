@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
 import LandingPage from "@/views/LandingPage.vue";
 import PlanetPage from "@/views/PlanetPage.vue";
+import PostPage from "@/views/PostPage.vue";
+
 // import About from "@/views/About.vue";
 // import NotFound from "@/views/NotFound.vue";
 
@@ -20,6 +22,11 @@ const routes = [
     path: "/planet",
     name: "Planet",
     component: PlanetPage,
+  },
+  {
+    path: "/post",
+    name: "Post",
+    component: PostPage,
   },
 //   {
 //     path: "/about",

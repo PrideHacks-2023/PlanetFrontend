@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@geoapify/geocoder-autocomplete": "^1.5.1",
     "@geoapify/leaflet-address-search-plugin": "^1.0.2",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "path": "^0.12.7",
     "planetary.js": "^1.1.3",
