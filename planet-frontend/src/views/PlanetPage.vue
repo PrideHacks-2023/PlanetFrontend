@@ -334,17 +334,6 @@ export default {
 
         planet.draw(canvas);
 
-
-        // // Every few hundred milliseconds, we'll draw another random ping.
-        // var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
-        // setInterval(function () {
-        //     var lat = Math.random() * 170 - 85;
-        //     var lng = Math.random() * 360 - 180;
-        //     var color = colors[Math.floor(Math.random() * colors.length)];
-        //     planet.plugins.worldPings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
-
-        // }, 200);
-
         getMessages(planet);
 
     }
@@ -399,10 +388,7 @@ export default {
 #topImage {
     width: 20vw;
     height: 20px;
-    /* border-radius: 1rem;
-    background: #1404624c;
-    -webkit-backdrop-filter: blur(3px);
-    backdrop-filter: blur(3px); */
+
     margin-bottom: 10px;
 }
 
