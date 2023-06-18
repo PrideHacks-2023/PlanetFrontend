@@ -15,18 +15,6 @@ const jsonFilePath = 'https://raw.githubusercontent.com/PrideHacks-2023/planetar
 //     return data;
 // }
 
-// async function loadPingsPlugin(planet) {
-//     // The `pings` plugin draws animated pings on the globe.
-
-//     // Every few hundred milliseconds, we'll draw another random ping.
-//     var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
-//     var lat = Math.random() * 170 - 85;
-//     var lng = Math.random() * 360 - 180;
-//     var color = colors[Math.floor(Math.random() * colors.length)];
-//     planet.plugins.pings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
-
-// }
-
 
 export default {
     name: "PlanetPage",
@@ -130,11 +118,19 @@ export default {
 
         planet.loadPlugin(planetaryjs.plugins.earth({
             topojson: { file: jsonFilePath },
-            oceans: { fill: '#000080' },
-            land: { fill: '#339966' },
-            borders: { stroke: '#008000' }
+            // // Default colors
+            // oceans: { fill: '#000080' },
+            // land: { fill: '#339966' },
+            // borders: { stroke: '#008000' }
+            // // Light colors
+            // oceans: { fill: '#449AB3' },
+            // land: { fill: '#4EB591' },
+            // borders: { stroke: '#008000' }
+            // // Dark colors
+            oceans: { fill: '#091A66' },
+            land: { fill: '#0B5936' },
+            borders: { stroke: '#0C7A3D' }
         }));
-
 
 
         planet.loadPlugin(planetaryjs.plugins.drag({
@@ -157,33 +153,10 @@ export default {
             color: 'yellow', ttl: 5000, angle: 10
         }));
 
-
-
         const canvas = this.$refs.globeCanvas;
-
-        // loadPingsPlugin(planet);
 
         planet.draw(canvas);
 
-        // setInterval(function () {
-        //     planet.plugins.worldPings.add(Math.random() * 360 - 180, Math.random() * 180 - 90, { color: 'yellow', ttl: 2000, angle: Math.random() * 10 });
-        // }, 100)
-
-
-
-        // // Add [lat, lon] pings to the planet.  See below for the implementation of
-        // // this function.
-        // function addRandomPings(planet, count) {
-        //     var i;
-        //     for (i = 0; i < count; i++) {
-        //         planet.plugins.pings.add(Math.random() * 360 - 180, Math.random() * 180 - 90, { color: 'yellow', ttl: 2000, angle: Math.random() * 10 });
-        //     }
-        // }
-
-        // // Add 1000 pings to the planet, randomly distributed.
-        // addRandomPings(planet, 1000);
-
-        // planet.plugins.worldPings.testFn();
 
         // Every few hundred milliseconds, we'll draw another random ping.
         var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
