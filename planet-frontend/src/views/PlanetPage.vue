@@ -59,7 +59,7 @@ async function getMessages(planet) {
     // Do a http get request to the backend using axios
     // return the response
 
-    await axios.get('http://143.198.81.168:5000/msg', {
+    await axios.get('https://planetsupport.tech/msg', {
         headers: {
         }
     }).then((response) => {
