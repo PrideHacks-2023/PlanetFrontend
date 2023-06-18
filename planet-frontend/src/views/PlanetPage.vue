@@ -15,7 +15,9 @@ import planetaryjs from 'planetary.js'
 // Get the path to the json file, not the contents
 // planet-frontend\public\static\world-110m.json
 
-const jsonFilePath = require('file-loader!../../public/static/world-110m.json');
+// Filepath = https://raw.githubusercontent.com/PrideHacks-2023/planetaryFiles/main/world-110m.json
+const jsonFilePath = 'https://raw.githubusercontent.com/PrideHacks-2023/planetaryFiles/main/world-110m.json'
+
 
 export default {
     name: "PlanetPage",
