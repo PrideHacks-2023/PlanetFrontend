@@ -17,6 +17,7 @@
     "@geoapify/leaflet-address-search-plugin": "^1.0.2",
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "cors": "^2.8.5",
     "path": "^0.12.7",
     "planetary.js": "^1.1.3",
     "vue": "^3.2.13",

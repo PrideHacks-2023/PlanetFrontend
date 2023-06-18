@@ -1,26 +1,73 @@
 <template>
-    <div class="center container">
-        <h1 id="pageHeader">Welcome to the Planetary Support Page</h1>
-        <canvas ref="globeCanvas" id='globe' width='500' height='500'></canvas>
+    <div class="planetPage">
+        <div class="center container">
+            <div class="center">
+                <h1 id="pageHeader">Welcome to the Planetary Support Page</h1>
+                <canvas ref="globeCanvas" id='globe' width='500' height='500'></canvas>
+            </div>
+        </div>
+
+        <div id="messages-container">
+            <h2>Messages</h2>
+            
+            <!-- Top image -->
+            <img id="topImage" src="../assets/top.png" alt="Top Image">
+
+            <div id="messages">
+                <div class="message">
+                    <div class="message-header">
+                        <h3 class="message-title">Message Title</h3>
+                        <h4 class="message-location">Message Location</h4>
+                    </div>
+                    <div class="message-body">
+                        <p class="message-content">Message Content</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom image -->
+            <div id="bottomImageDiv">
+                <img id="bottomImage" src="../assets/bottom.png" alt="Bottom Image">
+            </div>
+        </div>
     </div>
 </template>
   
 <script>
 import planetaryjs from 'planetary.js'
 import d3 from 'd3'
+// import bottomImage from '../assets/bottom.png'
+// import topImage from '../assets/top.png'
+// import axios from 'axios'
 
 const jsonFilePath = 'https://raw.githubusercontent.com/PrideHacks-2023/planetaryFiles/main/world-110m.json'
 
-// async function getMessages() {
-//     const response = await fetch('http://localhost:5000/messages');
-//     const data = await response.json();
-//     return data;
-// }
+async function getMessages() {
+    // // http://143.198.81.168:5000/msg
+    // // Do a http get request to the backend using axios
+    // // return the response
 
+    // await axios.get('http://143.198.81.168:5000/msg', {
+    //     headers: {
+    //     }
+    // }).then((response) => {
+    //     if (response.data) {
+    //         console.log(response.data)
+    //     }
+    // }).catch((error) => {
+    //     console.log(error)
+    // })
+
+    // 
+
+}
 
 export default {
     name: "PlanetPage",
     components: {
+    },
+    methods: {
+
     },
     mounted() {
         const planet = planetaryjs.planet();
@@ -170,6 +217,8 @@ export default {
 
         }, 200);
 
+        getMessages();
+
     }
 };
 
@@ -182,7 +231,7 @@ export default {
 /* Sci-fi techno hologram style */
 #pageHeader {
     text-align: center;
-    color: cyan;
+    color: #6ccfcf;
     font-family: monospace;
 
 }
@@ -194,4 +243,84 @@ export default {
     flex-direction: column;
     height: 100vh;
 }
+
+.planetPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#messages-container {
+    width: 30vw;
+    height: 80vh;
+    text-align: left;
+    margin: 50px;
+    padding: 20px;
+
+    color: #6ccfcf;
+    font-family: monospace;
+
+    background: #043e624c;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    border-radius: 1rem;
+}
+
+#topImage {
+    width: 20vw;
+    height: 20px;
+    /* border-radius: 1rem;
+    background: #1404624c;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px); */
+}
+
+#bottomImageDiv {
+    /* Right align */
+    width: 30vw;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    padding-top: 15px;
+}
+
+#bottomImage {
+    width: 20vw;
+    height: 20px;
+}
+
+#messages {
+    height: 85%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #058ea0a4; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.message {
+    margin-bottom: 10px;
+    border-radius: 1rem;
+    border-color: #6ccfcf88;
+}
+
 </style>
