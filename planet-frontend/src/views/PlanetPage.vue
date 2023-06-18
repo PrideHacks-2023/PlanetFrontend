@@ -1,6 +1,8 @@
 <template>
-    <h3 id="pageHeader">This is the Planet Support Page</h3>
-    <canvas ref="globeCanvas" id='globe' width='500' height='500'></canvas>
+    <div class="center container">
+        <h1 id="pageHeader">Welcome to the Planetary Support Page</h1>
+        <canvas ref="globeCanvas" id='globe' width='500' height='500'></canvas>
+    </div>
 </template>
   
 <script>
@@ -176,4 +178,20 @@ export default {
 
 </script>
   
-<style scoped></style>
+<style scoped>
+/* Sci-fi techno hologram style */
+#pageHeader {
+    text-align: center;
+    color: cyan;
+    font-family: monospace;
+
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+</style>
