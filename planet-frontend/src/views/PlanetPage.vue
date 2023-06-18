@@ -40,9 +40,7 @@ export default {
         function autorotate(degPerSec) {
             // Planetary.js plugins are functions that take a `planet` instance
             // as an argument...
-            console.log("bye1");
             return function (planet) {
-                console.log("bye2");
                 var lastTick = null;
                 var paused = false;
                 planet.plugins.autorotate = {
@@ -112,10 +110,8 @@ export default {
                 planet.path.context(context)(circle);
                 context.stroke();
             };
-            console.log("hello1");
 
             return function (planet) {
-                console.log("hello2");
                 planet.plugins.worldPings = {
                     add: addPing,
                     testFn: function () { console.log("does it work"); },
@@ -161,6 +157,20 @@ export default {
             color: 'yellow', ttl: 5000, angle: 10
         }));
 
+
+
+        const canvas = this.$refs.globeCanvas;
+
+        // loadPingsPlugin(planet);
+
+        planet.draw(canvas);
+
+        // setInterval(function () {
+        //     planet.plugins.worldPings.add(Math.random() * 360 - 180, Math.random() * 180 - 90, { color: 'yellow', ttl: 2000, angle: Math.random() * 10 });
+        // }, 100)
+
+
+
         // // Add [lat, lon] pings to the planet.  See below for the implementation of
         // // this function.
         // function addRandomPings(planet, count) {
@@ -173,27 +183,20 @@ export default {
         // // Add 1000 pings to the planet, randomly distributed.
         // addRandomPings(planet, 1000);
 
-        planet.plugins.worldPings.testFn();
+        // planet.plugins.worldPings.testFn();
 
         // Every few hundred milliseconds, we'll draw another random ping.
         var colors = ['red', 'yellow', 'white', 'orange', 'green', 'cyan', 'pink'];
-        var lat = Math.random() * 170 - 85;
-        var lng = Math.random() * 360 - 180;
-        var color = colors[Math.floor(Math.random() * colors.length)];
-        planet.plugins.worldPings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
+        setInterval(function () {
+            var lat = Math.random() * 170 - 85;
+            var lng = Math.random() * 360 - 180;
+            var color = colors[Math.floor(Math.random() * colors.length)];
+            planet.plugins.worldPings.add(lng, lat, { color: color, ttl: 2000, angle: Math.random() * 10 });
 
-
-
-        const canvas = this.$refs.globeCanvas;
-
-        // loadPingsPlugin(planet);
-
-        planet.draw(canvas);
-
+        }, 200);
 
     }
 };
-
 
 
 
