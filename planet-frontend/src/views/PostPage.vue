@@ -1,14 +1,37 @@
 <template>
-    <NavBar />
+    <div class="planetPage">
+        <h3 id="pageHeader">This is the Post Page</h3>
 
-    <h3 id="pageHeader">This is the Post Page</h3>
+        <div class="autocomplete-container" id="autocomplete"></div>
 
-    <div class="autocomplete-container" id="autocomplete"></div>
-
-
-    <div class="panel">
-
-
+        <div class="container center">
+            <h3 class="index">
+                Write an encouraging message!
+            </h3>
+            <form action="{{ url_for('message')}}" method="post">
+                <div class="form-group">
+                    <textarea class="form-control col-md-20" name="message" rows="10" cols="50">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <div class="autocomplete-container" id="autocomplete-container"></div>
+                </div>
+                <h3 class="index">
+                    Location to send message!
+                </h3>
+                <div class="form-group">
+                    <input class="form-control col-md-20" type="text" name="location" placeholder="Location">
+                </div>
+                <div class="form-group center1">
+                    <button type="button" class="btn" style="background-color:#E59866">
+                        <input class="btn index" style="background-color:#E59866" type="submit" value="Send">
+                    </button>
+                </div>
+            </form>
+            <h3 class="index">
+                Login or sign up to start sending messages! 🤭
+            </h3>
+        </div>
     </div>
 </template>
   
@@ -36,6 +59,14 @@ export default {
         autocomplete.on('select', (location) => {
             // check selected location here 
             console.log(location);
+
+            lat = location.properties.lat;
+            lon = location.properties.lon;
+            locationName = location.properties.formatted;
+
+            console.log(lat);
+            console.log(lon);
+            console.log(locationName);
         });
 
         autocomplete.on('suggestions', (suggestions) => {
@@ -50,6 +81,13 @@ export default {
 </script>
   
 <style scoped>
+/* Background */
+.planetPage {
+    background-color: #F7F7F7;
+    height: 100%;
+    width: 100%;
+}
+
 .autocomplete-container {
     /*the container must be positioned relative:*/
     position: relative;
